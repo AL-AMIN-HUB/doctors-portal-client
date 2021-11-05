@@ -10,15 +10,15 @@ const appointmentBanner = {
   backgroundColor: "rgba(57, 84, 124, 0.9)",
   backgroundBlendMode: "darken, luminosity",
   height: "700px",
-  margin: "200px 0 100px 0",
+  margin: "200px auto 100px auto",
 };
 const FooterContact = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
   };
   return (
-    <Container>
-      <Box style={appointmentBanner} sx={{ p: 5 }}>
+    <Container style={appointmentBanner}>
+      <Box sx={{ p: 5 }}>
         <Box>
           <Typography sx={{ color: "#0cebeb", textAlign: "center", letterSpacing: 2 }} variant="h6">
             CONTACT US

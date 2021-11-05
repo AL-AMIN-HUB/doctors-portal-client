@@ -10,14 +10,14 @@ const headerBox = {
   backgroundPosition: "center",
   backgroundRepeat: "no - repeat",
   backgroundSize: "cover",
-  height: "700px",
+  height: "800px",
 };
 
 const AppointmentHeader = ({ date, setDate }) => {
   return (
     <Box style={headerBox} sx={{ display: "flex", alignItems: "center" }}>
       <Container>
-        <Grid container spacing={2}>
+        <Grid container spacing={5}>
           <Grid item xs={12} md={5}>
             <Calender date={date} setDate={setDate}></Calender>
           </Grid>

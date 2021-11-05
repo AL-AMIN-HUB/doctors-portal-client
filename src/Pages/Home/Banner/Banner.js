@@ -21,7 +21,7 @@ const Banner = () => {
     <Box style={BannerImg}>
       <Container sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
-          <Grid data-aos="fade-right" style={{ ...verticalCenter, textAlign: "left" }} item xs={12} md={6}>
+          <Grid style={{ ...verticalCenter, textAlign: "left" }} item xs={12} md={6}>
             <Box>
               <Typography variant="h2" sx={{ fontWeight: "500", color: "#100549", mb: 5 }}>
                 <Typewriter

@@ -38,6 +38,12 @@ const Register = () => {
       <Container>
         <Grid container spacing={2}>
           <Grid sx={{ mt: 5, boxShadow: "1px 2px 10px rgba(0,0,0,0.1)" }} item xs={12} md={6}>
+            {isLoading && (
+              <Stack sx={{ width: "100%", color: "grey.500" }} spacing={2}>
+                <LinearProgress color="secondary" />
+              </Stack>
+            )}
+
             {user?.email ? (
               <Box style={{ marginTop: "50%", textAlign: "center" }}>
                 <NavLink style={{ textDecoration: "none" }} to="/home">
@@ -95,11 +101,6 @@ const Register = () => {
                   </form>
                 )}
               </Box>
-            )}
-            {isLoading && (
-              <Stack sx={{ width: "100%", color: "grey.500" }} spacing={2}>
-                <LinearProgress color="secondary" />
-              </Stack>
             )}
             {error && (
               <Alert sx={{ m: 1 }} severity="error">
