@@ -28,6 +28,9 @@ const useFirebase = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
         setUser(result.user);
+        //
+        // save user to the database
+        saveUser(result.user.email, result.user.displayName, "PUT");
         // ...
         const redirect_url = location?.state?.from || "/";
         history.replace(redirect_url);
@@ -49,6 +52,8 @@ const useFirebase = () => {
 
         const newUser = { email, displayName: name };
         setUser(newUser);
+        // save user to the database
+        saveUser(email, name, "POST");
         // send name to firebase
         updateProfile(auth.currentUser, {
           displayName: name,
@@ -118,6 +123,17 @@ const useFirebase = () => {
       .finally(() => {
         setIsLoading(false);
       });
+  };
+
+  // save users in the database
+
+  const saveUser = (email, displayName, method) => {
+    const user = { email, displayName };
+    fetch("http://localhost:5000/users", {
+      method: method,
+      headers: { "content-Type": "application/json" },
+      body: JSON.stringify(user),
+    }).then();
   };
 
   return {
