@@ -9,7 +9,7 @@ import { Typography } from "@mui/material";
 const Calender = ({ date, setDate }) => {
   return (
     <>
-      <Box sx={{ boxShadow: "2px 1px 10px lightgrey", pt: 5, mt: 5 }}>
+      <Box sx={{ boxShadow: "2px 1px 10px lightgrey", pt: 5 }}>
         <Typography variant="h4" sx={{ fontWeight: "500", mt: 2, textAlign: "center", pb: 5 }} component="div">
           Appointment
         </Typography>
@@ -18,7 +18,7 @@ const Calender = ({ date, setDate }) => {
             displayStaticWrapperAs="desktop"
             value={date}
             onChange={(newValue) => {
-              setDate(newValue);
+              Date(newValue);
             }}
             renderInput={(params) => <TextField {...params} />}
           />

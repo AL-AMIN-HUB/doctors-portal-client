@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import AuthProvider from "./context/AuthProvider";
 import Appointment from "./Pages/Appointment/Appointment";
+import Dashboard from "./Pages/Dashboard/Dashboard/Dashboard";
 import Footer from "./Pages/Home/Footer/Footer";
 import Home from "./Pages/Home/Home/Home";
 import Login from "./Pages/Login/Login/Login";
@@ -24,12 +25,15 @@ function App() {
             <PrivateRoute exact path="/appointment">
               <Appointment />
             </PrivateRoute>{" "}
+            <PrivateRoute path="/dashboard">
+              <Dashboard />
+            </PrivateRoute>
             <Route path="/login">
               <Login />
             </Route>{" "}
             <Route path="/register">
               <Register />
-            </Route>
+            </Route>{" "}
           </Switch>
           <Footer></Footer>
         </Router>

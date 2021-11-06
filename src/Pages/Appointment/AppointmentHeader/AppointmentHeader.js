@@ -18,7 +18,7 @@ const AppointmentHeader = ({ date, setDate }) => {
     <Box style={headerBox} sx={{ display: "flex", alignItems: "center" }}>
       <Container>
         <Grid container spacing={5}>
-          <Grid item xs={12} md={5}>
+          <Grid item xs={12} md={5} sx={{ mt: 5 }}>
             <Calender date={date} setDate={setDate}></Calender>
           </Grid>
           <Grid item xs={12} md={7}>

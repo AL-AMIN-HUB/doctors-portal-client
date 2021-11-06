@@ -41,9 +41,14 @@ const Navigation = () => {
           <NavItem to="/Blog">Blog</NavItem>
           <NavItem to="/contact">Contact</NavItem>
           {user?.email ? (
-            <Button onClick={logOut} variant="inherit">
-              <NavItem>LogOut</NavItem>
-            </Button>
+            <>
+              <NavItem to="/dashboard">Dashboard</NavItem>
+              <Button onClick={logOut} variant="inherit">
+                <NavItem sx={{ color: "white" }}>
+                  <i className="fas fa-sign-out-alt"></i> Log Out
+                </NavItem>
+              </Button>{" "}
+            </>
           ) : (
             <Button variant="inherit">
               <NavItem to="/login">Login</NavItem>
