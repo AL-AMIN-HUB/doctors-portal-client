@@ -8,7 +8,7 @@ import MuiButton from "../../../StyledComponent/MuiButton/MuiButton";
 
 const Login = () => {
   const [loginData, setLoginData] = useState({});
-  const { error, loginUser, isLoading } = useAuth();
+  const { error, loginUser, isLoading, signInWithGoogle } = useAuth();
 
   const location = useLocation();
   const history = useHistory();
@@ -29,6 +29,10 @@ const Login = () => {
     loginUser(loginData.email, loginData.password, location, history);
     e.preventDefault();
   };
+
+  const handleGoogleSignIn = () => {
+    signInWithGoogle(location, history);
+  };
   return (
     <Box style={{ height: "100vh" }}>
       <Container>
@@ -39,7 +43,6 @@ const Login = () => {
                 <LinearProgress color="secondary" />
               </Stack>
             )}
-
             <form action="#" onSubmit={handleLoginSubmit}>
               <Typography sx={{ width: "75%", textAlign: "center" }} variant="h5">
                 Login
@@ -47,7 +50,7 @@ const Login = () => {
               <TextField
                 sx={{ width: "75%", m: 1 }}
                 name="email"
-                onChange={handleOnChange}
+                onBlur={handleOnChange}
                 type="email"
                 id="standard-basic"
                 label="Email"
@@ -59,7 +62,7 @@ const Login = () => {
                 type="password"
                 id="standard-basic"
                 name="password"
-                onChange={handleOnChange}
+                onBlur={handleOnChange}
                 label="Password"
                 variant="standard"
               />{" "}
@@ -71,6 +74,14 @@ const Login = () => {
                 <Button variant="text">New User ? Please Register</Button>
               </NavLink>
             </form>
+            <Box sx={{ textAlign: "center", width: "75%", mt: 5 }}>
+              <Typography>------------------------------ OR -----------------------------</Typography>
+              <NavLink style={{ textDecoration: "none" }} to="/register">
+                <Button onClick={handleGoogleSignIn} className="btn-custom" sx={{ color: "white", py: 1, px: 2 }} variant="inherit">
+                  Sign In With Google
+                </Button>
+              </NavLink>
+            </Box>
 
             {error && (
               <Alert sx={{ m: 1 }} severity="error">

@@ -6,6 +6,7 @@ import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import MuiButton from "../../../StyledComponent/MuiButton/MuiButton";
+import useAuth from "../../../hooks/useAuth";
 //
 const style = {
   position: "absolute",
@@ -21,6 +22,9 @@ const style = {
 
 const BookingModal = ({ booking, bookingModal, handleBookingClose, date }) => {
   const { name, time } = booking;
+
+  const { user } = useAuth();
+
   const handleBookingSubmit = (e) => {
     alert("Submitting");
 
@@ -51,9 +55,9 @@ const BookingModal = ({ booking, bookingModal, handleBookingClose, date }) => {
             </Typography>
             <form onSubmit={handleBookingSubmit}>
               <TextField disabled sx={{ width: "100%", m: 1 }} id="outlined-size-small" defaultValue={time} size="small" />
-              <TextField sx={{ width: "100%", m: 1 }} id="outlined-size-small" placeholder="Your Name" size="small" />
-              <TextField sx={{ width: "100%", m: 1 }} id="outlined-size-small" placeholder="Your Email" size="small" />{" "}
-              <TextField sx={{ width: "100%", m: 1 }} id="outlined-size-small" placeholder="Your Phone Number" size="small" />
+              <TextField sx={{ width: "100%", m: 1 }} id="outlined-size-small" defaultValue={user.displayName} size="small" disabled />
+              <TextField sx={{ width: "100%", m: 1 }} id="outlined-size-small" defaultValue={user.email} disabled size="small" />{" "}
+              <TextField sx={{ width: "100%", m: 1 }} id="outlined-size-small" placeholder="Your Phone Number" required size="small" />
               <TextField disabled sx={{ width: "100%", m: 1 }} id="outlined-size-small" defaultValue={date.toDateString()} size="small" />
               <Box sx={{ textAlign: "end", mt: 2 }}>
                 <MuiButton type="submit" sx={{ color: "white" }}>

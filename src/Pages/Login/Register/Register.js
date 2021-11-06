@@ -1,7 +1,7 @@
 import { Container, Grid, CardMedia, Typography, TextField, Button, Alert } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import login from "../../../images/login.png";
 import MuiButton from "../../../StyledComponent/MuiButton/MuiButton";
 import Stack from "@mui/material/Stack";
@@ -10,12 +10,13 @@ import useAuth from "../../../hooks/useAuth";
 
 const Register = () => {
   const [loginData, setLoginData] = useState({});
-  const { registerUser, isLoading, user, error } = useAuth();
-  const handleOnChange = (e) => {
+  const { registerUser, isLoading, error } = useAuth();
+
+  const handleOnBlur = (e) => {
     // শুধুমাত্র আবজেক্ট থাকলে এরকম করে করলেও হবে ,, for code cleaner
     const field = e.target.name;
     const value = e.target.value;
-    //আগের ভ্যালু গুলা কপি করেছি এখানে
+    // যেটাকে আপডেট করছি ঐটাকে নিয়ে আসার আগে স্টেটে আগের বাকি যেই ভ্যালু  আছে ঐগুলা কপি করেছি এখানে।
     const newLoginData = { ...loginData };
     // তারপর প্রত্যেক ফিল্ড এর ভ্যালু নিচ্ছি।
     newLoginData[field] = value;
@@ -23,12 +24,16 @@ const Register = () => {
     // console.log(newLoginData);
     setLoginData(newLoginData);
   };
+
+  const history = useHistory();
+
   const handleLoginSubmit = (e) => {
+    registerUser(loginData.email, loginData.password, loginData.name, history);
+    e.preventDefault();
+
     if (loginData.password !== loginData.password2) {
       alert("Your password is incorrect,, please enter your correct password");
     }
-    registerUser(loginData.email, loginData.password);
-    e.preventDefault();
   };
 
   //   progress
@@ -44,64 +49,60 @@ const Register = () => {
               </Stack>
             )}
 
-            {user?.email ? (
-              <Box style={{ marginTop: "50%", textAlign: "center" }}>
-                <NavLink style={{ textDecoration: "none" }} to="/home">
-                  <Button variant="text">Please Back Home</Button>
+            {!isLoading && (
+              <form action="#" onSubmit={handleLoginSubmit}>
+                <Typography sx={{ width: "75%", textAlign: "center" }} variant="h5">
+                  Register
+                </Typography>
+                <TextField
+                  sx={{ width: "75%", m: 1 }}
+                  name="name"
+                  onBlur={handleOnBlur}
+                  type="text"
+                  id="standard-basic"
+                  label="Your Name"
+                  variant="standard"
+                />{" "}
+                <br />{" "}
+                <TextField
+                  sx={{ width: "75%", m: 1 }}
+                  name="email"
+                  onBlur={handleOnBlur}
+                  type="email"
+                  id="standard-basic"
+                  label="Email"
+                  variant="standard"
+                />{" "}
+                <br />
+                <TextField
+                  sx={{ width: "75%", m: 1 }}
+                  type="password"
+                  id="standard-basic"
+                  name="password"
+                  onBlur={handleOnBlur}
+                  label="Password"
+                  variant="standard"
+                />{" "}
+                <br />
+                <TextField
+                  sx={{ width: "75%", m: 1 }}
+                  type="password"
+                  id="standard-basic"
+                  name="password2"
+                  onBlur={handleOnBlur}
+                  label="Confirm Password"
+                  variant="standard"
+                />{" "}
+                <br />
+                <MuiButton sx={{ width: "75%", m: 1 }} type="submit">
+                  Create Account
+                </MuiButton>
+                <NavLink style={{ textDecoration: "none" }} to="/login">
+                  <Button variant="text">Already Registered ? Please Login</Button>
                 </NavLink>
-                {user?.email && (
-                  <Alert sx={{ m: 1 }} severity="success">
-                    Congratulations! You're Successfully Created Account
-                  </Alert>
-                )}
-              </Box>
-            ) : (
-              <Box>
-                {!isLoading && (
-                  <form action="#" onSubmit={handleLoginSubmit}>
-                    <Typography sx={{ width: "75%", textAlign: "center" }} variant="h5">
-                      Register
-                    </Typography>
-                    <TextField
-                      sx={{ width: "75%", m: 1 }}
-                      name="email"
-                      onChange={handleOnChange}
-                      type="email"
-                      id="standard-basic"
-                      label="Email"
-                      variant="standard"
-                    />{" "}
-                    <br />
-                    <TextField
-                      sx={{ width: "75%", m: 1 }}
-                      type="password"
-                      id="standard-basic"
-                      name="password"
-                      onChange={handleOnChange}
-                      label="Password"
-                      variant="standard"
-                    />{" "}
-                    <br />
-                    <TextField
-                      sx={{ width: "75%", m: 1 }}
-                      type="password"
-                      id="standard-basic"
-                      name="password2"
-                      onChange={handleOnChange}
-                      label="Confirm Password"
-                      variant="standard"
-                    />{" "}
-                    <br />
-                    <MuiButton sx={{ width: "75%", m: 1 }} type="submit">
-                      Create Account
-                    </MuiButton>
-                    <NavLink style={{ textDecoration: "none" }} to="/login">
-                      <Button variant="text">Already Registered ? Please Login</Button>
-                    </NavLink>
-                  </form>
-                )}
-              </Box>
+              </form>
             )}
+
             {error && (
               <Alert sx={{ m: 1 }} severity="error">
                 {error}
