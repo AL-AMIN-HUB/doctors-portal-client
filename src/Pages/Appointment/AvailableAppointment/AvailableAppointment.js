@@ -1,9 +1,10 @@
-import { Container, Grid, Typography } from "@mui/material";
+import { Alert, Container, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import Booking from "../Booking/Booking";
 
 const AvailableAppointment = ({ date }) => {
+  const [bookingSuccess, setBookingSuccess] = useState(false);
   const [bookings, setBookings] = useState([]);
   useEffect(() => {
     fetch("http://localhost:5000/booking")
@@ -18,9 +19,14 @@ const AvailableAppointment = ({ date }) => {
             Available Appointments on {date.toDateString()}
           </Typography>
           <Box sx={{ flexGrow: 1 }}>
+            {bookingSuccess && (
+              <Alert sx={{ m: 1 }} severity="success">
+                Congratulations! Your appointment was successfully
+              </Alert>
+            )}
             <Grid container spacing={2}>
               {bookings.map((booking) => (
-                <Booking date={date} key={booking.id} booking={booking}></Booking>
+                <Booking date={date} key={booking.id} booking={booking} setBookingSuccess={setBookingSuccess}></Booking>
               ))}
             </Grid>
           </Box>

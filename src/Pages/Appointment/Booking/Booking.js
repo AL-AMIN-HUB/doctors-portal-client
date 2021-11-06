@@ -3,7 +3,7 @@ import React from "react";
 import MuiButton from "../../../StyledComponent/MuiButton/MuiButton";
 import BookingModal from "../BookingModal/BookingModal";
 
-const Booking = ({ date, booking }) => {
+const Booking = ({ date, booking, setBookingSuccess }) => {
   const [bookingModal, setBookingModal] = React.useState(false);
   const handleBookingOpen = () => setBookingModal(true);
   const handleBookingClose = () => setBookingModal(false);
@@ -29,7 +29,13 @@ const Booking = ({ date, booking }) => {
           </Button> */}
         </Paper>
       </Grid>
-      <BookingModal date={date} booking={booking} bookingModal={bookingModal} handleBookingClose={handleBookingClose}></BookingModal>
+      <BookingModal
+        date={date}
+        booking={booking}
+        bookingModal={bookingModal}
+        handleBookingClose={handleBookingClose}
+        setBookingSuccess={setBookingSuccess}
+      ></BookingModal>
     </>
   );
 };

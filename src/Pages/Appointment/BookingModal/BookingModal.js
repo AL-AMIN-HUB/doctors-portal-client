@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -20,21 +20,53 @@ const style = {
   p: 4,
 };
 
-const BookingModal = ({ booking, bookingModal, handleBookingClose, date }) => {
+const BookingModal = ({ booking, bookingModal, handleBookingClose, date, setBookingSuccess }) => {
   const { name, time } = booking;
 
   const { user } = useAuth();
+  const initialInfo = { patientName: user.displayName, email: user.email, phone: "" };
+  const [bookingInfo, setBookingInfo] = useState(initialInfo);
+
+  // handle on blur
+  const handleOnBlur = (e) => {
+    const field = e.target.name;
+    const value = e.target.value;
+    const newInfo = { ...bookingInfo };
+    newInfo[field] = value;
+    // console.log(newInfo);
+    setBookingInfo(newInfo);
+  };
 
   const handleBookingSubmit = (e) => {
-    alert("Submitting");
-
     // collect data
+    const appointment = {
+      ...bookingInfo,
+      time,
+      serviceName: name,
+      date: date.toLocaleDateString(),
+    };
+    // console.log(appointment);
 
     // send to the server
+    fetch("http://localhost:5000/appointments", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(appointment),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.insertedId) {
+          setBookingSuccess(true);
+          handleBookingClose();
+        }
+      });
 
     handleBookingClose();
     e.preventDefault();
   };
+
   return (
     <div>
       <Modal
@@ -55,9 +87,31 @@ const BookingModal = ({ booking, bookingModal, handleBookingClose, date }) => {
             </Typography>
             <form onSubmit={handleBookingSubmit}>
               <TextField disabled sx={{ width: "100%", m: 1 }} id="outlined-size-small" defaultValue={time} size="small" />
-              <TextField sx={{ width: "100%", m: 1 }} id="outlined-size-small" defaultValue={user.displayName} size="small" disabled />
-              <TextField sx={{ width: "100%", m: 1 }} id="outlined-size-small" defaultValue={user.email} disabled size="small" />{" "}
-              <TextField sx={{ width: "100%", m: 1 }} id="outlined-size-small" placeholder="Your Phone Number" required size="small" />
+              <TextField
+                name="patientName"
+                onBlur={handleOnBlur}
+                sx={{ width: "100%", m: 1 }}
+                id="outlined-size-small"
+                defaultValue={user.displayName}
+                size="small"
+              />
+              <TextField
+                name="email"
+                onBlur={handleOnBlur}
+                sx={{ width: "100%", m: 1 }}
+                id="outlined-size-small"
+                defaultValue={user.email}
+                size="small"
+              />{" "}
+              <TextField
+                name="phone"
+                onBlur={handleOnBlur}
+                sx={{ width: "100%", m: 1 }}
+                id="outlined-size-small"
+                placeholder="Your Phone Number"
+                required
+                size="small"
+              />
               <TextField disabled sx={{ width: "100%", m: 1 }} id="outlined-size-small" defaultValue={date.toDateString()} size="small" />
               <Box sx={{ textAlign: "end", mt: 2 }}>
                 <MuiButton type="submit" sx={{ color: "white" }}>
