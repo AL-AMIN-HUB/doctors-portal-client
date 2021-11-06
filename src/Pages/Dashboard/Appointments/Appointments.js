@@ -10,16 +10,16 @@ import Paper from "@mui/material/Paper";
 import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
 
-const Appointments = () => {
+const Appointments = ({ date }) => {
   const { user } = useAuth();
   const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
-    const url = `http://localhost:5000/appointments?email=${user?.email}`;
+    const url = `http://localhost:5000/appointments?email=${user?.email}&date=${date}`;
     fetch(url)
       .then((res) => res.json())
       .then((data) => setAppointments(data));
-  }, [user?.email]);
+  }, [user?.email, date]);
   return (
     <Box>
       <TableContainer sx={{ p: 5 }} component={Paper}>
@@ -31,7 +31,7 @@ const Appointments = () => {
             <TableRow>
               <TableCell>Name</TableCell>
               <TableCell align="right">Time</TableCell>
-              <TableCell align="right">Action(g)</TableCell>
+              <TableCell align="right">Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
