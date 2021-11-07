@@ -11,15 +11,19 @@ import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
 
 const Appointments = ({ date }) => {
-  const { user } = useAuth();
+  const { user, token } = useAuth();
   const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
     const url = `http://localhost:5000/appointments?email=${user?.email}&date=${date}`;
-    fetch(url)
+    fetch(url, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => setAppointments(data));
-  }, [user?.email, date]);
+  }, [user?.email, date, token]);
   return (
     <Box>
       <TableContainer sx={{ p: 5 }} component={Paper}>
@@ -31,6 +35,7 @@ const Appointments = ({ date }) => {
             <TableRow>
               <TableCell>Name</TableCell>
               <TableCell align="right">Time</TableCell>
+              <TableCell align="right">Service</TableCell>
               <TableCell align="right">Action</TableCell>
             </TableRow>
           </TableHead>
@@ -41,7 +46,7 @@ const Appointments = ({ date }) => {
                   {row.patientName}
                 </TableCell>
                 <TableCell align="right">{row.time}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
+                <TableCell align="right">{row.serviceName}</TableCell>
                 <TableCell align="right">{row.carbs}</TableCell>
                 <TableCell align="right">{row.protein}</TableCell>
               </TableRow>
