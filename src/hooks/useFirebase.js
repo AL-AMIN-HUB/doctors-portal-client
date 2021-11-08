@@ -33,7 +33,7 @@ const useFirebase = () => {
         setUser(result.user);
         //
         // save user to the database
-        // saveUser(result.user.email, result.user.displayName, "PUT");
+        saveUser(result.user.email, result.user.displayName, "PUT");
         // ...
         const redirect_url = location?.state?.from || "/";
         history.replace(redirect_url);
@@ -56,7 +56,7 @@ const useFirebase = () => {
         const newUser = { email, displayName: name };
         setUser(newUser);
         // save user to the database
-        // saveUser(email, name, "POST");
+        saveUser(email, name, "POST");
         // send name to firebase
         updateProfile(auth.currentUser, {
           displayName: name,
@@ -110,7 +110,9 @@ const useFirebase = () => {
       if (user) {
         setUser(user);
         getIdToken(user).then((idToken) => {
+          // most of the case idToken uses localStorage
           setToken(idToken);
+          // console.log(idToken);
         });
       } else {
         setUser({});
@@ -142,14 +144,14 @@ const useFirebase = () => {
 
   // save users in the database
 
-  /* const saveUser = (email, displayName, method) => {
+  const saveUser = (email, displayName, method) => {
     const user = { email, displayName };
     fetch("http://localhost:5000/users", {
       method: method,
       headers: { "content-Type": "application/json" },
       body: JSON.stringify(user),
     }).then();
-  }; */
+  };
 
   return {
     token,

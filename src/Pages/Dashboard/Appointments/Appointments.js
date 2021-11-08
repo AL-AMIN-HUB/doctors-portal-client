@@ -18,7 +18,7 @@ const Appointments = ({ date }) => {
     const url = `http://localhost:5000/appointments?email=${user?.email}&date=${date}`;
     fetch(url, {
       headers: {
-        authorization: `Bearer ${token}`,
+        'authorization': `Bearer ${token}`,
       },
     })
       .then((res) => res.json())
