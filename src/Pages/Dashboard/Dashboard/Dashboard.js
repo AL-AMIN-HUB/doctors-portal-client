@@ -122,12 +122,12 @@ const Dashboard = (props) => {
           <Route exact path={path}>
             <DashboardHome />
           </Route>
-          <AdminRoute path={`${path}/makeAdmin`}>
+          <Route path={`${path}/makeAdmin`}>
             <MakeAdmin />
-          </AdminRoute>{" "}
-          <AdminRoute path={`${path}/addDoctor`}>
+          </Route>{" "}
+          <Route path={`${path}/addDoctor`}>
             <AddDoctor />
-          </AdminRoute>
+          </Route>
         </Switch>
       </Box>
     </Box>
