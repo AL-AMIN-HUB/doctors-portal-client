@@ -27,6 +27,7 @@ const drawerWidth = 240;
 
 const Dashboard = (props) => {
   const { admin } = useAuth();
+
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -122,12 +123,12 @@ const Dashboard = (props) => {
           <Route exact path={path}>
             <DashboardHome />
           </Route>
-          <Route path={`${path}/makeAdmin`}>
+          <AdminRoute path={`${path}/makeAdmin`}>
             <MakeAdmin />
-          </Route>{" "}
-          <Route path={`${path}/addDoctor`}>
+          </AdminRoute>{" "}
+          <AdminRoute path={`${path}/addDoctor`}>
             <AddDoctor />
-          </Route>
+          </AdminRoute>
         </Switch>
       </Box>
     </Box>
