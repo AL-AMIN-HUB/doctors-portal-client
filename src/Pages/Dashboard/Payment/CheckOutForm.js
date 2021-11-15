@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 
 const CheckOutForm = ({ appointment }) => {
-  const { price, patientName } = appointment;
+  const { price, patientName, _id } = appointment;
   const { user } = useAuth();
   const stripe = useStripe();
   const elements = useElements();
@@ -69,6 +69,27 @@ const CheckOutForm = ({ appointment }) => {
       setSuccess("Your payment processed successfully");
       console.log(paymentIntent);
       setProcessing(false);
+
+      const payment = {
+        amount: paymentIntent.amount,
+        created: paymentIntent.created,
+        last4: paymentMethod.card.last4,
+        transaction: paymentIntent.client_secret.slice("_secret")[0],
+      };
+
+      // save to database
+      const url = `https://dry-sands-38758.herokuapp.com/appointments/${_id}`;
+      fetch(url, {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(payment),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        });
     }
   };
   return (
@@ -96,7 +117,7 @@ const CheckOutForm = ({ appointment }) => {
           <button
             style={{ background: "lightgreen", padding: "10px 17px", fontSize: "20px", border: "none", marginTop: "20px", cursor: "pointer" }}
             type="submit"
-            disabled={!stripe}
+            disabled={!stripe || success}
           >
             Payment ${price}
           </button>
