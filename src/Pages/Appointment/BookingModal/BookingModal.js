@@ -21,7 +21,7 @@ const style = {
 };
 
 const BookingModal = ({ booking, bookingModal, handleBookingClose, date, setBookingSuccess }) => {
-  const { name, time } = booking;
+  const { name, time, price } = booking;
 
   const { user } = useAuth();
   const initialInfo = { patientName: user.displayName, email: user.email, phone: "" };
@@ -42,13 +42,14 @@ const BookingModal = ({ booking, bookingModal, handleBookingClose, date, setBook
     const appointment = {
       ...bookingInfo,
       time,
+      price,
       serviceName: name,
       date: date.toLocaleDateString(),
     };
     // console.log(appointment);
 
     // send to the server
-    fetch("https://enigmatic-sierra-19501.herokuapp.com/appointments", {
+    fetch("https://dry-sands-38758.herokuapp.com/appointments", {
       method: "POST",
       headers: {
         "content-type": "application/json",

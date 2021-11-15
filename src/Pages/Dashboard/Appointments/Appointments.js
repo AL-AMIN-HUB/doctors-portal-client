@@ -8,17 +8,18 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Box } from "@mui/system";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const Appointments = ({ date }) => {
   const { user, token } = useAuth();
   const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
-    const url = `https://enigmatic-sierra-19501.herokuapp.com/appointments?email=${user?.email}&date=${date.toLocaleDateString()}`;
+    const url = `https://dry-sands-38758.herokuapp.com/appointments?email=${user?.email}&date=${date.toLocaleDateString()}`;
     fetch(url, {
       headers: {
-        'authorization': `Bearer ${token}`,
+        authorization: `Bearer ${token}`,
       },
     })
       .then((res) => res.json())
@@ -47,8 +48,16 @@ const Appointments = ({ date }) => {
                 </TableCell>
                 <TableCell align="right">{row.time}</TableCell>
                 <TableCell align="right">{row.serviceName}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
+                <TableCell align="right">
+                  {row.payment ? (
+                    "Paid"
+                  ) : (
+                    <Link style={{ textDecoration: "none" }} to={`/dashboard/payment/${row._id}`}>
+                      {" "}
+                      <Button variant="contained">Pay</Button>{" "}
+                    </Link>
+                  )}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

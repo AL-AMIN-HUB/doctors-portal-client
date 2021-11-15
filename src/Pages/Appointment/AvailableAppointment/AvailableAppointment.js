@@ -7,7 +7,7 @@ const AvailableAppointment = ({ date }) => {
   const [bookingSuccess, setBookingSuccess] = useState(false);
   const [bookings, setBookings] = useState([]);
   useEffect(() => {
-    fetch("https://enigmatic-sierra-19501.herokuapp.com/booking")
+    fetch("https://dry-sands-38758.herokuapp.com/booking")
       .then((res) => res.json())
       .then((data) => setBookings(data));
   }, []);

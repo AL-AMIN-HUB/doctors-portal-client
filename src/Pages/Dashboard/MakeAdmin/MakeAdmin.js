@@ -9,11 +9,11 @@ const MakeAdmin = () => {
 
   const handleAdminSubmit = (e) => {
     const user = { email };
-    fetch("https://enigmatic-sierra-19501.herokuapp.com/users/admin", {
+    fetch("https://dry-sands-38758.herokuapp.com/users/admin", {
       method: "PUT",
       headers: {
-        'authorization': `Bearer ${token}`,
-        'content-type': "application/json",
+        authorization: `Bearer ${token}`,
+        "content-type": "application/json",
       },
       body: JSON.stringify(user),
     })
