@@ -1,7 +1,7 @@
 import { Container, Grid, CardMedia, Typography, TextField, Button, Alert } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import login from "../../../images/login.png";
 import MuiButton from "../../../StyledComponent/MuiButton/MuiButton";
 import Stack from "@mui/material/Stack";
@@ -25,10 +25,10 @@ const Register = () => {
     setLoginData(newLoginData);
   };
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleLoginSubmit = (e) => {
-    registerUser(loginData.email, loginData.password, loginData.name, history);
+    registerUser(loginData.email, loginData.password, loginData.name, navigate);
     e.preventDefault();
 
     if (loginData.password !== loginData.password2) {

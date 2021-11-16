@@ -7,6 +7,8 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import MuiButton from "../../../StyledComponent/MuiButton/MuiButton";
 import useAuth from "../../../hooks/useAuth";
+import { useNavigate } from "react-router";
+import swal from "sweetalert";
 //
 const style = {
   position: "absolute",
@@ -22,6 +24,7 @@ const style = {
 
 const BookingModal = ({ booking, bookingModal, handleBookingClose, date, setBookingSuccess }) => {
   const { name, time, price } = booking;
+  const navigate = useNavigate();
 
   const { user } = useAuth();
   const initialInfo = { patientName: user.displayName, email: user.email, phone: "" };
@@ -61,6 +64,8 @@ const BookingModal = ({ booking, bookingModal, handleBookingClose, date, setBook
         if (data.insertedId) {
           setBookingSuccess(true);
           handleBookingClose();
+          swal("Your appointment has been successfully!");
+          navigate("/dashboard");
         }
       });
 

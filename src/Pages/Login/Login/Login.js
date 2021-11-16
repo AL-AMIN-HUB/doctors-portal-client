@@ -1,7 +1,7 @@
 import { Container, Grid, CardMedia, Typography, TextField, Button, Alert, Stack, LinearProgress } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
-import { NavLink, useLocation, useHistory } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import login from "../../../images/login.png";
 import MuiButton from "../../../StyledComponent/MuiButton/MuiButton";
@@ -11,7 +11,7 @@ const Login = () => {
   const { error, loginUser, isLoading, signInWithGoogle } = useAuth();
 
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleOnChange = (e) => {
     // শুধুমাত্র আবজেক্ট থাকলে এরকম করে করলেও হবে ,, for code cleaner
@@ -26,12 +26,12 @@ const Login = () => {
     setLoginData(newLoginData);
   };
   const handleLoginSubmit = (e) => {
-    loginUser(loginData.email, loginData.password, location, history);
+    loginUser(loginData.email, loginData.password, location, navigate);
     e.preventDefault();
   };
 
   const handleGoogleSignIn = () => {
-    signInWithGoogle(location, history);
+    signInWithGoogle(location, navigate);
   };
   return (
     <Box style={{ height: "100vh" }}>
